@@ -5,192 +5,147 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Peugeot 308 P5 GT | Garaj</title>
   <style>
+    :root {
+      /* Varsayılan Vurgu Rengi: Elixir Kırmızı */
+      --accent-color: #da3633;
+      --accent-glow: rgba(218, 54, 51, 0.4);
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Segoe UI', Arial, sans-serif;
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     }
 
     body {
-      background: radial-gradient(circle at center, #1e2631 0%, #0a0d12 100%);
-      color: #f0f6fc;
+      background-color: #0a0a0a;
+      color: #f0f0f0;
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
       padding: 20px;
+      position: relative;
+      overflow-x: hidden;
     }
 
-    /* POP-UP / TARİHÇE MODALI */
-    .overlay {
+    /* ARKA PLAN LOGO */
+    body::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px;
+      height: 600px;
+      background: url('https://www.peugeot.com.tr/content/dam/peugeot/master/b2c/open/logos/logo-peugeot-white.png') no-repeat center/contain;
+      opacity: 0.04;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* SOL VE SAĞ RENKLİ YAN ÇİZGİLER (DİNAMİK) */
+    .side-border-left, .side-border-right {
       position: fixed;
       top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.85);
-      backdrop-filter: blur(8px);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 999;
-      transition: opacity 0.4s ease;
+      width: 6px;
+      height: 100vh;
+      background: var(--accent-color);
+      box-shadow: 0 0 15px var(--accent-glow);
+      transition: background 0.4s ease, box-shadow 0.4s ease;
+      z-index: 10;
     }
+    .side-border-left { left: 0; }
+    .side-border-right { right: 0; }
 
-    .modal-card {
-      background: #161b22;
-      border: 2px solid #da3633;
-      width: 90%;
-      max-width: 550px;
-      padding: 30px;
-      border-radius: 16px;
-      position: relative;
-      box-shadow: 0 0 30px rgba(218, 54, 51, 0.3);
-    }
-
-    .close-btn {
-      position: absolute;
-      top: 15px;
-      right: 20px;
-      background: #da3633;
-      color: white;
-      border: none;
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      font-weight: bold;
-      font-size: 1.1rem;
-      cursor: pointer;
-      transition: transform 0.2s;
-    }
-
-    .close-btn:hover {
-      transform: scale(1.15);
-      background: #f85149;
-    }
-
-    .modal-card h2 {
-      color: #f0f6fc;
-      font-size: 1.4rem;
-      margin-bottom: 5px;
-    }
-
-    .subtitle {
-      color: #8b949e;
-      font-size: 0.9rem;
-    }
-
-    .modal-card hr {
-      border: 0;
-      height: 1px;
-      background: #30363d;
-      margin: 15px 0;
-    }
-
-    .modal-body p {
-      font-size: 0.95rem;
-      line-height: 1.6;
-      color: #c9d1d9;
-      margin-bottom: 12px;
-    }
-
-    /* ANA DÜZEN */
     .main-wrapper {
       width: 100%;
-      max-width: 1050px;
+      max-width: 1100px;
+      position: relative;
+      z-index: 1;
     }
 
+    /* BAŞLIK */
     .main-header {
       text-align: center;
-      margin-bottom: 25px;
+      margin-bottom: 30px;
     }
 
     .main-header h1 {
-      font-size: 2.4rem;
-      letter-spacing: 2px;
+      font-size: 2.8rem;
+      letter-spacing: 3px;
       color: #ffffff;
-      text-shadow: 0 0 15px rgba(218, 54, 51, 0.5);
+      text-transform: uppercase;
+      font-weight: 800;
+      text-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
     }
 
     .main-header p {
-      color: #da3633;
-      font-weight: 600;
-      margin-top: 5px;
+      color: #a0a0a0;
+      font-size: 1rem;
+      margin-top: 6px;
+      letter-spacing: 1px;
     }
 
-    /* YAN YANA GARAJ CONTAINER */
-    .garage-container {
-      display: flex;
-      gap: 24px;
-      background: #161b22;
-      border: 1px solid #30363d;
-      border-radius: 16px;
-      padding: 24px;
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
-    }
-
-    /* SOL MENU */
-    .sidebar-menu {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
+    /* BUTON IZGARASI */
+    .button-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
       gap: 12px;
-      min-width: 220px;
-    }
-
-    .sidebar-menu h3 {
-      font-size: 1.1rem;
-      color: #8b949e;
-      margin-bottom: 8px;
-      border-bottom: 1px solid #30363d;
-      padding-bottom: 8px;
+      margin-bottom: 25px;
     }
 
     .part-btn {
-      background: #21262d;
-      color: #c9d1d9;
-      border: 1px solid #30363d;
-      padding: 14px 16px;
-      border-radius: 10px;
-      text-align: left;
+      background: #141414;
+      color: #cccccc;
+      border: 1px solid #2a2a2a;
+      padding: 16px 12px;
+      border-radius: 8px;
       font-size: 0.95rem;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.25s ease;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
     }
 
     .part-btn:hover {
-      background: #30363d;
+      background: #222222;
       color: #ffffff;
-      border-color: #da3633;
+      border-color: #555555;
+      transform: translateY(-2px);
     }
 
     .part-btn.active {
-      background: #da3633;
+      background: var(--accent-color);
       color: #ffffff;
-      border-color: #f85149;
-      box-shadow: 0 0 15px rgba(218, 54, 51, 0.4);
+      border-color: var(--accent-color);
+      font-weight: 700;
+      box-shadow: 0 0 15px var(--accent-glow);
     }
 
-    /* SAĞ PANEL */
+    /* ANA İÇERİK PANENİ */
     .display-panel {
-      flex: 2.5;
-      background: #0d1117;
-      border: 1px solid #30363d;
+      background: #111111;
+      border: 1px solid #222222;
+      border-top: 3px solid var(--accent-color);
       border-radius: 12px;
-      padding: 20px;
+      padding: 25px;
       display: flex;
-      flex-direction: column;
-      gap: 16px;
+      gap: 25px;
+      align-items: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+      transition: border-color 0.4s ease;
     }
 
     .image-box {
-      width: 100%;
-      height: 260px;
-      background: #161b22;
+      flex: 1.2;
+      height: 320px;
+      background: #000000;
       border-radius: 8px;
       overflow: hidden;
+      border: 1px solid #2a2a2a;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -200,17 +155,19 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 0.3s ease;
+      transition: transform 0.4s ease;
     }
 
-    .image-box img:hover {
-      transform: scale(1.03);
+    .info-details {
+      flex: 1;
     }
 
     .info-details h2 {
-      color: #f0f6fc;
-      font-size: 1.3rem;
-      margin-bottom: 10px;
+      color: #ffffff;
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+      border-bottom: 2px solid #333333;
+      padding-bottom: 8px;
     }
 
     .text-content ul {
@@ -218,150 +175,178 @@
     }
 
     .text-content li {
-      padding: 6px 0;
-      border-bottom: 1px dashed #21262d;
-      color: #c9d1d9;
+      padding: 8px 0;
+      border-bottom: 1px solid #1a1a1a;
+      color: #dddddd;
       font-size: 0.95rem;
+      line-height: 1.5;
     }
 
-    @media (max-width: 768px) {
-      .garage-container {
+    /* SUB-MENU (ALT RENK SEÇİMİ) */
+    .color-sub-menu {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 15px;
+      padding-top: 10px;
+      border-top: 1px dashed #222;
+    }
+
+    .color-chip {
+      padding: 8px 12px;
+      border-radius: 6px;
+      border: 1px solid #333;
+      background: #1a1a1a;
+      color: #fff;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .color-chip:hover {
+      transform: scale(1.05);
+      border-color: #666;
+    }
+
+    .color-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    @media (max-width: 850px) {
+      .display-panel {
         flex-direction: column;
+      }
+      .image-box {
+        width: 100%;
+        height: 230px;
+      }
+      .button-grid {
+        grid-template-columns: repeat(2, 1fr);
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- POP-UP TARİHÇE KARTI -->
-  <div class="overlay" id="historyOverlay">
-    <div class="modal-card">
-      <button class="close-btn" onclick="closeHistory()">X</button>
-      <h2>🦁 PEUGEOT 308 P5 GT TARİHÇESİ</h2>
-      <p class="subtitle">Fransa Mulhouse fabrikasında üretilen yeni nesil efsane.</p>
-      <hr>
-      <div class="modal-body">
-        <p>
-          Yeni Peugeot 308 P5 kasa, markanın aslan kafası formundaki yepyeni amblemini taşıyan ilk model olarak otomotiv dünyasına adım attı.
-        </p>
-        <p>
-          Özellikle <strong>GT paketi</strong>; keskin gövde hatları, devasa ön ızgarası, 3 pençeli Matrix LED ışık imzası ve sürücü odaklı 3D i-Cockpit® yapısıyla C-segmentinde tasarımın zirvesini temsil ediyor.
-        </p>
-        <p><i>İncelemeye başlamak için sağ üstteki <b>[ X ]</b> tuşuna basarak garaja girebilirsin!</i></p>
-      </div>
-    </div>
-  </div>
+  <!-- YAN BÖLÜM NEON ŞERİTLERİ -->
+  <div class="side-border-left" id="borderLeft"></div>
+  <div class="side-border-right" id="borderRight"></div>
 
-  <!-- ANA GARAJ EKRANI -->
   <div class="main-wrapper">
+    
     <header class="main-header">
       <h1>PEUGEOT 308 P5 GT</h1>
-      <p>1.5 BlueHDi 130 HP EAT8 • Elixir Kırmızı</p>
+      <p>1.5 BlueHDi 130 HP EAT8 • Özel Garaj</p>
     </header>
 
-    <div class="garage-container">
-      
-      <!-- SOL MENU -->
-      <div class="sidebar-menu">
-        <h3>🚗 PARÇALAR</h3>
-        <button class="part-btn active" onclick="showPart('motor', this)">⚙️ Motor Bilgisi</button>
-        <button class="part-btn" onclick="showPart('sanziman', this)">🕹️ Şanzıman (EAT8)</button>
-        <button class="part-btn" onclick="showPart('renk', this)">🎨 Renk & Gövde</button>
-        <button class="part-btn" onclick="showPart('jant', this)">🛞 Jant & Lastik</button>
-        <button class="part-btn" onclick="showPart('kokpit', this)">👺 3D i-Cockpit®</button>
-      </div>
-
-      <!-- SAĞ PANEL -->
-      <div class="display-panel">
-        <div class="image-box">
-          <img id="partImage" src="https://images.ctfassets.net/389f41ikag1f/5f5VOnfG21S13Aylh5TqN1/bd248b894ec05b1ed56b106ec56e9c6a/Peugeot-308-01.jpg" alt="308 P5 GT">
-        </div>
-        <div class="info-details">
-          <h2 id="partTitle">⚙️ 1.5 BlueHDi 130 HP Motor</h2>
-          <div id="partText" class="text-content">
-            <ul>
-              <li><strong>Motor Tipi:</strong> 4 Silindirli Turbo Dizel (BlueHDi)</li>
-              <li><strong>Maksimum Güç:</strong> 130 HP (96 kW) / 3750 dev/dak</li>
-              <li><strong>Maksimum Tork:</strong> 300 Nm / 1750 dev/dak</li>
-              <li><strong>WLTP Tüketim:</strong> ~5.1 L / 100 km karma tüketim</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
+    <div class="button-grid">
+      <button class="part-btn active" onclick="showPart('tarihce', this)">📜 Tarihçe</button>
+      <button class="part-btn" onclick="showPart('motor', this)">⚙️ Motor</button>
+      <button class="part-btn" onclick="showPart('sanziman', this)">🕹️ Şanzıman</button>
+      <button class="part-btn" onclick="showPart('renk', this)">🎨 Renk Paleti</button>
+      <button class="part-btn" onclick="showPart('jant', this)">🛞 Jant & Lastik</button>
+      <button class="part-btn" onclick="showPart('kokpit', this)">👺 3D i-Cockpit®</button>
     </div>
+
+    <div class="display-panel">
+      <div class="image-box">
+        <img id="partImage" src="https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=1000&q=80" alt="308 P5 GT">
+      </div>
+      <div class="info-details">
+        <h2 id="partTitle">📜 Peugeot 308 P5 GT Tarihçesi</h2>
+        <div id="partText" class="text-content">
+          <ul>
+            <li><strong>Üretim Yeri:</strong> Fransa Mulhouse Fabrikası</li>
+            <li><strong>Tasarım Dili:</strong> Keskin hatchback hatları, 3 pençeli Matrix LED ışık imzası ve aerodinamik GT detayları.</li>
+            <li><strong>Konumlandırma:</strong> C-segmentinde üst seviye sürüş dinamikleri ve premium iç mekan kalitesi sunan amiral gemisi.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
   </div>
 
   <script>
     const partsData = {
+      tarihce: {
+        title: "📜 Peugeot 308 P5 GT Tarihçesi",
+        image: "https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=1000&q=80",
+        content: `
+          <ul>
+            <li><strong>Üretim Yeri:</strong> Fransa Mulhouse Fabrikası</li>
+            <li><strong>Tasarım Dili:</strong> Keskin hatchback hatları, 3 pençeli Matrix LED ışık imzası ve aerodinamik GT detayları.</li>
+            <li><strong>Konumlandırma:</strong> C-segmentinde üst seviye sürüş dinamikleri ve premium iç mekan kalitesi sunan amiral gemisi.</li>
+          </ul>
+        `
+      },
       motor: {
         title: "⚙️ 1.5 BlueHDi 130 HP Motor",
-        image: "https://images.ctfassets.net/389f41ikag1f/5f5VOnfG21S13Aylh5TqN1/bd248b894ec05b1ed56b106ec56e9c6a/Peugeot-308-01.jpg",
+        image: "https://images.unsplash.com/photo-1486006920555-c77dce18193b?auto=format&fit=crop&w=1000&q=80",
         content: `
           <ul>
             <li><strong>Motor Tipi:</strong> 4 Silindirli Turbo Dizel (BlueHDi)</li>
-            <li><strong>Maksimum Güç:</strong> 130 HP (96 kW) / 3750 dev/dak</li>
-            <li><strong>Maksimum Tork:</strong> 300 Nm / 1750 dev/dak</li>
-            <li><strong>WLTP Tüketim:</strong> ~5.1 L / 100 km karma tüketim</li>
+            <li><strong>Güç & Tork:</strong> 130 HP / 300 Nm Tork</li>
+            <li><strong>Sistem:</strong> Stop & Start destekli yüksek verimlilik</li>
+            <li><strong>Tüketim:</strong> ~5.1 L / 100 km WLTP karma tüketim</li>
           </ul>
         `
       },
       sanziman: {
         title: "🕹️ EAT8 Tam Otomatik Şanzıman",
-        image: "https://www.peugeot.com.tr/content/dam/peugeot/master/b2c/open/cockpit/peugeot-i-cockpit-toggle.jpg",
+        image: "https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?auto=format&fit=crop&w=1000&q=80",
         content: `
           <ul>
-            <li><strong>Şanzıman Tipi:</strong> 8 İleri Tam Otomatik (EAT8)</li>
-            <li><strong>Vites Kumandası:</strong> Minimal tasarımlı e-Toggle Vites Mandalı</li>
+            <li><strong>Vites Tipi:</strong> 8 İleri Tam Otomatik (EAT8)</li>
+            <li><strong>Kumanda:</strong> Minimalist e-Toggle Vites Seçici</li>
             <li><strong>Sürüş Modları:</strong> Eco, Normal, Sport</li>
-            <li><strong>Manuel Kontrol:</strong> Direksiyon arkası F1 Vites Kulakçıkları</li>
+            <li><strong>Kontrol:</strong> Direksiyon arkası F1 vites kulakçıkları</li>
           </ul>
         `
       },
       renk: {
-        title: "🎨 Elixir Kırmızı & GT Dış Gövde",
-        image: "https://www.peugeot.com.tr/content/dam/peugeot/master/models/308/308-hb/design/exterior/peugeot-308-exterior-01.jpg",
+        title: "🎨 Gövde Renkleri & Temalar",
+        image: "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=1000&q=80",
         content: `
-          <ul>
-            <li><strong>Özel Renk:</strong> Elixir Kırmızı lansman rengi</li>
-            <li><strong>Aydınlatma:</strong> PEUGEOT Matrix LED Ön Farlar</li>
-            <li><strong>Işık İmzası:</strong> 3 Pençeli LED Arka Stoplar</li>
-            <li><strong>GT Detaylar:</strong> Parlak siyah tavan ve 3D dikey ön ızgara</li>
-          </ul>
+          <p style="color:#aaa; font-size:0.9rem; margin-bottom:10px;">Bir renge tıklayarak sitenin yan vurgu renklerini değiştirebilirsin:</p>
+          <div class="color-sub-menu">
+            <button class="color-chip" onclick="changeTheme('#da3633', 'rgba(218, 54, 51, 0.4)')"><span class="color-dot" style="background:#da3633;"></span> Elixir Kırmızı</button>
+            <button class="color-chip" onclick="changeTheme('#0077ff', 'rgba(0, 119, 255, 0.4)')"><span class="color-dot" style="background:#0077ff;"></span> Lagoa Mavi</button>
+            <button class="color-chip" onclick="changeTheme('#e6e6e6', 'rgba(230, 230, 230, 0.4)')"><span class="color-dot" style="background:#e6e6e6;"></span> Okanit Beyaz</button>
+            <button class="color-chip" onclick="changeTheme('#a8b0b8', 'rgba(168, 176, 184, 0.4)')"><span class="color-dot" style="background:#a8b0b8;"></span> Tekno Gri (Açık)</button>
+            <button class="color-chip" onclick="changeTheme('#4a525d', 'rgba(74, 82, 93, 0.4)')"><span class="color-dot" style="background:#4a525d;"></span> Selenyum Gri (Koyu)</button>
+            <button class="color-chip" onclick="changeTheme('#222222', 'rgba(100, 100, 100, 0.4)')"><span class="color-dot" style="background:#222222;"></span> Siyah İnci</button>
+          </div>
         `
       },
       jant: {
-        title: "🛞 18 inç Helsinki Alaşım Jantlar",
-        image: "https://www.peugeot.com.tr/content/dam/peugeot/master/models/308/308-hb/design/exterior/peugeot-308-wheels.jpg",
+        title: "🛞 18 inç Helsinki Jantlar",
+        image: "https://images.unsplash.com/photo-1611821064430-0d40291d0f0d?auto=format&fit=crop&w=1000&q=80",
         content: `
           <ul>
             <li><strong>Jant Modeli:</strong> 18" Helsinki Elmas Kesim Alaşım</li>
-            <li><strong>Lastik Ebatı:</strong> 225/40 R18 Yüksek Performans Lastikleri</li>
-            <li><strong>Tasarım:</strong> Aerodinamik optimize edilmiş GT jant yapısı</li>
+            <li><strong>Lastik Ebatı:</strong> 225/40 R18</li>
+            <li><strong>GT Detayı:</strong> Aerodinamik kanatçıklı özel jant göbeği</li>
           </ul>
         `
       },
       kokpit: {
         title: "👺 PEUGEOT 3D i-Cockpit®",
-        image: "https://www.peugeot.com.tr/content/dam/peugeot/master/models/308/308-hb/design/interior/peugeot-308-interior-01.jpg",
+        image: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1000&q=80",
         content: `
           <ul>
-            <li><strong>Gösterge:</strong> 10 inç Kişiselleştirilebilir 3D Dijital Ekran</li>
-            <li><strong>Multimedya:</strong> 10 inç HD Dokunmatik Ekran + i-Toggles Kısayolları</li>
-            <li><strong>Direksiyon:</strong> GT Amblemli, Isıtmalı Deri Spor Direksiyon</li>
-            <li><strong>Döşeme:</strong> Adamit Yeşili Dikişli Alcantara / TEP Kumaş</li>
+            <li><strong>Gösterge:</strong> 10 inç 3D Dijital Gösterge Paneli</li>
+            <li><strong>Ekran:</strong> 10 inç HD Dokunmatik Ekran + i-Toggles kısayolları</li>
+            <li><strong>Detaylar:</strong> Adamit yeşili dikişli GT deri direksiyon</li>
           </ul>
         `
       }
     };
-
-    function closeHistory() {
-      const overlay = document.getElementById('historyOverlay');
-      overlay.style.opacity = '0';
-      setTimeout(() => {
-        overlay.style.display = 'none';
-      }, 400);
-    }
 
     function showPart(partKey, btnElement) {
       const data = partsData[partKey];
@@ -374,6 +359,12 @@
       const allButtons = document.querySelectorAll('.part-btn');
       allButtons.forEach(btn => btn.classList.remove('active'));
       btnElement.classList.add('active');
+    }
+
+    // SİTE YAN RENKLERİNİ DEĞİŞTİREN FONKSİYON
+    function changeTheme(mainColor, glowColor) {
+      document.documentElement.style.setProperty('--accent-color', mainColor);
+      document.documentElement.style.setProperty('--accent-glow', glowColor);
     }
   </script>
 </body>
