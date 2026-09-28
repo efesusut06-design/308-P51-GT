@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Peugeot 308 P5 GT | Garaj</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- 1. POP-UP KANATLI TARİHÇE KARTI -->
+  <div class="overlay" id="historyOverlay">
+    <div class="modal-card">
+      <button class="close-btn" onclick="closeHistory()">X</button>
+      <h2>🦁 PEUGEOT 308 P5 GT TARİHÇESİ</h2>
+      <p class="subtitle">Fransa Mulhouse fabrikasında üretilen yeni nesil efsane.</p>
+      <hr>
+      <div class="modal-body">
+        <p>
+          Yeni Peugeot 308 P5 kasa, markanın aslan kafası formundaki yepyeni amblemini taşıyan ilk model olarak otomotiv dünyasına adım attı.
+        </p>
+        <p>
+          Özellikle <strong>GT paketi</strong>; keskin gövde hatları, devasa ön ızgarası, 3 pençeli Matrix LED ışık imzası ve sürücü odaklı 3D i-Cockpit® yapısıyla C-segmentinde tasarımın zirvesini temsil ediyor.
+        </p>
+        <p><i>İncelemeye başlamak için sağ üstteki <b>[ X ]</b> tuşuna basarak garaja girebilirsin!</i></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. ANA GARAJ EKRANI -->
+  <div class="main-wrapper">
+    <header class="main-header">
+      <h1>PEUGEOT 308 P5 GT</h1>
+      <p>1.5 BlueHDi 130 HP EAT8 • Elixir Kırmızı</p>
+    </header>
+
+    <!-- YAN YANA YAPI -->
+    <div class="garage-container">
+      
+      <!-- SOL PANEL: BUTONLAR -->
+      <div class="sidebar-menu">
+        <h3>🚗 PARÇALAR</h3>
+        <button class="part-btn active" onclick="showPart('motor', this)">⚙️ Motor Bilgisi</button>
+        <button class="part-btn" onclick="showPart('sanziman', this)">🕹️ Şanzıman (EAT8)</button>
+        <button class="part-btn" onclick="showPart('renk', this)">🎨 Renk & Gövde</button>
+        <button class="part-btn" onclick="showPart('jant', this)">🛞 Jant & Lastik</button>
+        <button class="part-btn" onclick="showPart('kokpit', this)">👺 3D i-Cockpit®</button>
+      </div>
+
+      <!-- SAĞ PANEL: GÖRSEL VE BİLGİ -->
+      <div class="display-panel">
+        <div class="image-box">
+          <img id="partImage" src="https://images.ctfassets.net/389f41ikag1f/5f5VOnfG21S13Aylh5TqN1/bd248b894ec05b1ed56b106ec56e9c6a/Peugeot-308-01.jpg" alt="308 P5 GT">
+        </div>
+        <div class="info-details">
+          <h2 id="partTitle">⚙️ 1.5 BlueHDi 130 HP Motor</h2>
+          <div id="partText" class="text-content">
+            <ul>
+              <li><strong>Motor Tipi:</strong> 4 Silindirli Turbo Dizel (BlueHDi)</li>
+              <li><strong>Maksimum Güç:</strong> 130 HP (96 kW) / 3750 dev/dak</li>
+              <li><strong>Maksimum Tork:</strong> 300 Nm / 1750 dev/dak</li>
+              <li><strong>WLTP Tüketim:</strong> ~5.1 L / 100 km karma tüketim</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
